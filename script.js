@@ -51,18 +51,15 @@ if (contactForm) {
 
     const data = Object.fromEntries(new FormData(contactForm));
     data.source = 'website_contact_form';
+    data.received_letter = contactForm.received_letter?.checked ?? false;
 
-    // Optionally post to Formspree — set FORMSPREE_ID below
-    const FORMSPREE_ID = '';
-    if (FORMSPREE_ID) {
-      try {
-        await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(data),
-        });
-      } catch (_) {}
-    }
+    try {
+      await fetch('/api/enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+    } catch (_) {}
 
     document.getElementById('form-inner').style.display = 'none';
     document.getElementById('form-success').style.display = 'block';
@@ -96,16 +93,13 @@ if (coolingForm) {
     data.campaign_reference = ref;
     data.source = 'cooling_letter';
 
-    const FORMSPREE_ID = '';
-    if (FORMSPREE_ID) {
-      try {
-        await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(data),
-        });
-      } catch (_) {}
-    }
+    try {
+      await fetch('/api/enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+    } catch (_) {}
 
     document.getElementById('cooling-form-wrap').style.display = 'none';
     document.getElementById('cooling-success').style.display = 'block';
