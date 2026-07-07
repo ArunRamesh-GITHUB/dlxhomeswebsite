@@ -9,7 +9,7 @@
 //   WEBSITE_LEAD_SECRET       must match WEBSITE_LEAD_SECRET on the backend
 //   DLX_ROI_TWILIO_NUMBER     e.g. +447863773125 (identifies the client row)
 
-const ALLOWED_SOURCES = new Set(['website_contact_form', 'cooling_letter']);
+const ALLOWED_SOURCES = new Set(['website_contact_form', 'cooling_letter', 'heat_pump_grant_landing_page']);
 
 export async function onRequestPost({ request, env }) {
   let body;
@@ -39,6 +39,8 @@ export async function onRequestPost({ request, env }) {
       message: body.message,
       received_letter: body.received_letter,
       campaign_reference: body.campaign_reference,
+      heating: body.heating,
+      timeframe: body.timeframe,
       source,
     }),
   });

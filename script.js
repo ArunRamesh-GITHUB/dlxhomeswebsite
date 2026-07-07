@@ -105,3 +105,28 @@ if (coolingForm) {
     document.getElementById('cooling-success').style.display = 'block';
   });
 }
+
+// Heat pump grant form
+const heatPumpForm = document.getElementById('heat-pump-form');
+if (heatPumpForm) {
+  heatPumpForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = heatPumpForm.querySelector('button[type="submit"]');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    const data = Object.fromEntries(new FormData(heatPumpForm));
+    data.source = 'heat_pump_grant_landing_page';
+
+    try {
+      await fetch('/api/enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+    } catch (_) {}
+
+    document.getElementById('heat-pump-form-inner').style.display = 'none';
+    document.getElementById('heat-pump-success').style.display = 'block';
+  });
+}
